@@ -7,11 +7,11 @@
 
 ## 项目技术
 
-前端： vue/bootstrap
-后端: springboot + mybatis plus
-数据库: 暂定mysql
-服务器: 先使用tomcat, 后期需要购买服务器进行上线
-其他技术: 网络爬虫，深度学习
+* 前端： vue/bootstrap
+* 后端: springboot + mybatis plus
+* 数据库: 暂定mysql
+* 服务器: 先使用tomcat, 后期需要购买服务器进行上线
+* 其他技术: 网络爬虫，深度学习
 ## 项目计划
 
 2023年4月左右需要结项，项目考虑如下几个阶段进行：
