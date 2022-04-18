@@ -1,19 +1,30 @@
-# ACM-Intelligent-management-platform
+# acm_front
 
-## 项目简要介绍
-本项目的出发点是开发一个智能平台用于管理acm集训队，以此引申出诸多功能如下
-1. 基础功能：集训队队员信息管理，比赛信息录入，资料档案管理，新闻等等；
-2. 拓展功能：用户数据展示，利用网络爬虫，根据用户在其他oj的账户数据将用户综合数据进行可视化展示并进行智能推荐，同时计算出各个方面的用户综合排名，放在主页展现。
+> A Vue.js project
 
-## 项目技术
+## Build Setup
 
-* 前端： vue/bootstrap
-* 后端: springboot + mybatis plus
-* 数据库: 暂定mysql
-* 服务器: 先使用tomcat, 后期需要购买服务器进行上线
-* 其他技术: 网络爬虫，深度学习
-## 项目计划
+``` bash
+# install dependencies
+npm install
 
-2023年4月左右需要结项，项目考虑如下几个阶段进行：
-1. 2022.4 - 2022.7 基础功能的实现
-2. 2022.8 - 最后 拓展功能及服务器上线和调试
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
