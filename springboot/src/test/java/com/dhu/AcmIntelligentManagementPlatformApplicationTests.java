@@ -21,11 +21,10 @@ class AcmIntelligentManagementPlatformApplicationTests {
     @Test
     void testInsert(){
         User user = new User();
-        user.setName("张三");
+        user.setUsername("张三");
         user.setAge(23);
         user.setEmail("zhangsan@guigu.com");
         int result = userMapper.insert(user);
         System.out.println(result);
-        System.out.println(user.getId());
     }
 }
