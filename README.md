@@ -1,4 +1,4 @@
-# acm_front
+# acm-vue
 
 > A Vue.js project
 
