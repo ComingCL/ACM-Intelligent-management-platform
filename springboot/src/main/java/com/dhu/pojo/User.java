@@ -21,8 +21,10 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor//@Validated //数据校验 jsr303校验
 @TableName("user")
 public class User {
+    @ApiModelProperty("用户id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
     @ApiModelProperty("用户名")
-    @TableId("username")
     private String username;
     @ApiModelProperty("用户年龄")
     private Integer age;

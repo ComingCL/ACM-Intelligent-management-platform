@@ -19,38 +19,25 @@ import javax.servlet.http.HttpSession;
  * Date: 2022/4/18 14:49
  */
 @Controller
+@RequestMapping("/Login")
 public class LoginController {
 //    默认请求error
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/hello")
-    @ResponseBody
-    public String hello(){
-        return "hello";
-    }
-
-    @PostMapping(value = "/user")
-    @ResponseBody
-    public User user(@ApiParam("用户") User user) {
-        return user;
-    }
-
     @GetMapping(value = "/login")
     @ResponseBody
-    public String login(
+    public Result<?> login(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             @ApiIgnore Model model,
             @ApiIgnore HttpSession session){
-        ModelAndView mv = new ModelAndView();
-        User user = userService.getById(username);
+        User user = userService.selectUser(username);
         if(user != null && user.getPassword().equals(password)){
             session.setAttribute("User", user);
         }else{
-            return "error";
+            return Result.error("error", "用户名或密码错误");
         }
-//        else mv.setViewName("error");
-        return "index";
+        return Result.success(user);
     }
 }
