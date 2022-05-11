@@ -106,7 +106,7 @@ export default {
       formData.set("email", this.email);
       formData.set("phone", this.phone);
       this.axios
-        .post(this.GLOBAL.BaseUrl + "/register", formData)
+        .post(this.GLOBAL.BaseUrl + "/User/register", formData)
         .then((res) => {
           console.log(res);
           if (res.data.code !== 201) {
@@ -114,7 +114,7 @@ export default {
           } else {
             this.$Notice.success({ title: res.data.message });
             setTimeout(() => {
-              this.$router.replace({ path: "/user/login" });
+              this.$router.replace({ path: "/Login/login" });
             }, 1000);
           }
         });

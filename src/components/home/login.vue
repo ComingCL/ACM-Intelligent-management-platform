@@ -58,7 +58,7 @@
       </el-form>
     </el-main>
   </el-container>
-  
+
 </template>
 <script>
 export default {
@@ -76,21 +76,21 @@ export default {
   },
   methods: {
     studentRegister() {
-      this.$router.push('/user/register')
+      this.$router.push('/User/register')
     },
     onSubmit() {
       let formData = new FormData();
       formData.set("username", this.username);
       formData.set("password", this.password);
       this.axios
-        .post(this.GLOBAL.BaseUrl + "/login", formData)
+        .post(this.GLOBAL.BaseUrl + "/Login/login", formData)
         .then((res) => {
           if (res.data.code !== 200) {
             this.error(res.data.message);
           } else {
             //请求用户信息.
             this.axios
-              .get(this.GLOBAL.BaseUrl + "/user/userInfo")
+              .get(this.GLOBAL.BaseUrl + "/User/getUsers")
               .then((res) => {
                 if (res.data.code === 200) {
                   sessionStorage.setItem(
