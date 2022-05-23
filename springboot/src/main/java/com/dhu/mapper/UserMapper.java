@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository // 代表持久层
 public interface UserMapper extends BaseMapper<User> {
     User selectUser(@Param("username") String username);
+    User selectEmail(@Param("email") String email);
 }

@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
  */
 public interface UserService extends IService<User> {
     Result<?> userInsert(String username, String password, String email);
-    Result<?> getcode(String sender, JavaMailSenderImpl mailSender, String receiver);
     User selectUser(String username);
+    User selectEmail(String email);
 }

@@ -5,4 +5,8 @@
     <select id="selectUser" resultType="com.dhu.pojo.User">
         select * from user where username=#{username}
     </select>
+<!--    User selectEmail(@Param("email") String email);-->
+    <select id="selectEmail" resultType="com.dhu.pojo.User">
+        select * from user where email=#{email}
+    </select>
 </mapper>

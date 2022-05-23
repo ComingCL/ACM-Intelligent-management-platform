@@ -7,6 +7,7 @@ import com.dhu.mapper.NewsMapper;
 import com.dhu.pojo.News;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class NewController {
     @Autowired
     private NewsMapper newsMapper;
     @PostMapping("/release")
-    @ApiModelProperty("新闻发布功能")
+    @ApiOperation("新闻发布功能")
     @ResponseBody
     public Result<?> release(
             @ApiParam("新闻名")
@@ -46,12 +47,20 @@ public class NewController {
         newsService.release(time, name, content, sender);
         return Result.success(new News(null, time, name, content, sender));
     }
+    @ApiOperation("新闻分页显示, 每页二十条")
     @GetMapping(value = "/getAll-news")
     @ResponseBody
     public Result<?> getAll_news(Integer currentPage){
-        int pageNumber = 10;// 每页显示10条数据
+        int pageNumber = 20;// 每页显示20条数据
         Page<News> page = new Page<>(currentPage, pageNumber);
         newsMapper.selectPage(page, null);
         return Result.success(page.getRecords());
+    }
+
+    @ApiOperation("获取新闻总条数")
+    @GetMapping(value = "/get-the-number-of-news-items")
+    @ResponseBody
+    public Result<?> get_the_number_of_news_items(){
+        return Result.success(newsService.count());
     }
 }

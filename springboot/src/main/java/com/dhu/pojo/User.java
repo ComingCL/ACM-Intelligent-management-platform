@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * Author: ComingLiu
- * Date: 2022/4/18 13:41
+ * @Author: ComingLiu
+ * @Date: 2022/4/18 13:41
  */
 
 @ApiModel("用户实体类")
@@ -38,4 +38,8 @@ public class User {
     private String number;
     @ApiModelProperty("用户类型") // 0表示管理员, 1表示普通用户
     private Integer power;
+    @ApiModelProperty("是否激活")
+    private Integer activation;
+    @ApiModelProperty("头像")
+    private Object image;
 }

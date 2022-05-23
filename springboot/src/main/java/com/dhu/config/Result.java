@@ -21,23 +21,23 @@ public class Result<T> {
     public Result (T data){
         this.data = data;
     }
-    public static Result success(){
-        Result result = new Result<>();
-        result.setCode("0");
+    public static Result<?> success(){
+        Result<?> result = new Result<>();
+        result.setCode("1");
         result.setMsg("成功");
         return result;
     }
 
     public static <T> Result<T> success(T data){
         Result<T> result = new Result<>(data);
-        result.setCode("0");
+        result.setCode("1");
         result.setMsg("成功");
         return result;
     }
 
-    public static Result error(String code, String msg){
-        Result result = new Result();
-        result.setCode(code);
+    public static Result<?> error(String msg){
+        Result<?> result = new Result<>();
+        result.setCode("0");
         result.setMsg(msg);
         return result;
     }

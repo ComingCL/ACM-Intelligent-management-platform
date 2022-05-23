@@ -45,8 +45,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(){
         Contact contact = new Contact("CL", "http://www,baidu.com", "1328004790@qq.com");
        return new ApiInfoBuilder()
-               .title("后台管理系统-API文档")
-               .description("本文描述了...")
+               .title("后端-API文档")
+               .description("本文描述了一个接口文档")
                .version("2.0")
                .contact(new Contact("", "", ""))
                .build();

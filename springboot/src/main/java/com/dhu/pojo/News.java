@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 /**
- * Author: ComingLiu
- * Date: 2022/5/10 19:45
+ * @Author: ComingLiu
+ * @Date: 2022/5/10 19:45
  */
 
 @ApiModel("新闻实体类")
