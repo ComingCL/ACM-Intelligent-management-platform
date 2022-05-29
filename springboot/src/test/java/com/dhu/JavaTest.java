@@ -1,6 +1,8 @@
 package com.dhu;
 
+import com.dhu.Service.OJService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Author: ComingLiu

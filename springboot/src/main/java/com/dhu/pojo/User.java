@@ -42,4 +42,6 @@ public class User {
     private Integer activation;
     @ApiModelProperty("头像")
     private Object image;
+    @ApiModelProperty("洛谷id")
+    private String luoguId;
 }

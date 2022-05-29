@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dhu.Service.MailService;
 import com.dhu.Service.NewsService;
+import com.dhu.Service.OJService;
+import com.dhu.Service.UserService;
 import com.dhu.mapper.NewsMapper;
 import com.dhu.mapper.UserMapper;
 import com.dhu.pojo.News;
 import com.dhu.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -28,32 +31,17 @@ public class AcmIntelligentManagementPlatformApplicationTests {
     @Autowired
     JavaMailSenderImpl mailSender;
     @Autowired
+    private OJService ojService;
+    @Autowired
     private NewsService newsService;
-    /*
+    @Autowired
+    private UserService userService;
     @Test
-    void testPython(){
-        Process proc;
-        try{
-//            这里python解释器位置也要写好
-            proc = Runtime.getRuntime().exec("C:\\Users\\13280\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe \"C:\\Users\\13280\\Desktop\\ACM Intelligent management platform\\springboot\\src\\main\\java\\com\\dhu\\python\\hdu.py\"");
-            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "gbk"));
-            String line;
-            while((line = in.readLine()) != null){
-                System.out.println(line);
-            }
-            in.close();
-            int res = proc.waitFor();
-//            0表示正常否则不正常
-//            System.out.println(res);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void testOJ(){
+        ojService.getLuoguInformation("2");
     }
-     */
-    /*
-    @Test
-    public void testNews(){
-        System.out.println(newsService.count());
+
+    public static void main(String[] args) {
+        SpringApplication.run(AcmIntelligentManagementPlatformApplication.class, args);
     }
-     */
 }

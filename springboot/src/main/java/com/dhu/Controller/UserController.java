@@ -7,6 +7,7 @@ import com.dhu.mapper.UserMapper;
 import com.dhu.pojo.User;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,7 +124,7 @@ public class UserController {
         return Result.success(user);
     }
     @ApiOperation("修改用户头像")
-    @PostMapping(value = "edit_image")
+    @PostMapping(value = "/edit_image")
     @ResponseBody
     public Result<?> edit_image(
             @RequestParam("image") MultipartFile image,
@@ -134,6 +135,18 @@ public class UserController {
         user.setImage(blob);
         userService.updateById(user);
         return Result.success(user);
+    }
+    @ApiOperation("洛谷账号绑定")
+    @PostMapping(value = "/luogu")
+    @ResponseBody
+    public Result<?> luogu(@ApiParam("洛谷用户编号") @RequestParam("id") String id,
+                           @ApiIgnore HttpSession session){
+        User user = (User) session.getAttribute("User");
+        if(user == null){
+            return Result.error("用户未登录");
+        }
+        userService.modifyLuoguId(user.getId(), id);
+        return Result.success();
     }
     @ApiOperation("获取所有用户")
     @GetMapping(value = "/getUsers")

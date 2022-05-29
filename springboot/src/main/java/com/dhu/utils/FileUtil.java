@@ -1,6 +1,9 @@
 package com.dhu.utils;
 
+import cn.hutool.poi.word.WordUtil;
 import com.dhu.config.Result;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
 
@@ -17,15 +20,11 @@ public class FileUtil {
      * 下载文件
      */
     public static void downloadFiles(HttpServletRequest request, HttpServletResponse response,
-                                String filename){
-//        if(!StringUtils.hasLength(filename)){
-//            return Result.error("文件名为空");
-//        }
-        ClassPathResource classPathResource = new ClassPathResource("templates/" + filename);
+                                     String filename){
         File file = null;
         try{
-            file = classPathResource.getFile();
-        }catch (IOException e){
+            file = new File("/root/templates/template.xls");
+        }catch (Exception e){
             e.printStackTrace();
             return;
 //            return Result.error("文件名不存在");

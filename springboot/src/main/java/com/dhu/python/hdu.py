@@ -32,17 +32,16 @@ result = re.findall(pattern=pattern, string=FootList)
 
 total = len(result)
 
-file = open('src/main/java/com/dhu/python/excel/hdu.csv', 'a')
+file = open('excel/hdu.csv', 'a')
 # 文件定位到开头
 file.seek(0)
 file.truncate()
 file.write('None1,Number,None2,Name,Accepted,Submission\n')
-
 for i in range(1, total + 1):
     new_url = url + '?' + hdu_special + '=' + str(i)
     new_response = requests.get(new_url, headers=header)
     # 在网页控制台通过document.charset获得
-    new_response.encoding = 'GBK'
+    new_response.encoding = 'utf-8'
     new_soup = BeautifulSoup(new_response.text, features='lxml')
     ProblemList = new_soup.find('table', {'class': {'table_text'}})
     ProblemList = str(ProblemList)

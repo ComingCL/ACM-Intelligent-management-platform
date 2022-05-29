@@ -1,5 +1,6 @@
 package com.dhu.Service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dhu.Service.UserService;
 import com.dhu.config.Result;
@@ -29,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result<?> userInsert(String username, String password, String email){
         User user = getById(username);
         if(user != null) return Result.error("用户已存在");
-        user = new User(null, username, null, email, null, password, null, 1, 1, null);
+        user = new User(null, username, null, email, null, password, null, 1, 1, null, null);
         save(user);
         return Result.success(user);
     }
@@ -41,5 +42,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User selectEmail(String email) {
         return userMapper.selectEmail(email);
+    }
+
+    @Override
+    public void modifyLuoguId(Long uid, String id) {
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
+        updateWrapper.eq("id", uid);
+        updateWrapper.set("luoguid", id);
+        baseMapper.update(null, updateWrapper);
     }
 }
