@@ -19,8 +19,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     username: root
     password: 123456
-#    url: jdbc:mysql://139.196.147.195:3306/acm?serverTimezone=GMT%2B8&useSSL=false&userUnicode=true&characterEncoding=utf-8
-    url: jdbc:mysql://localhost:3306/acm?serverTimezone=GMT%2B8&useSSL=false&userUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://139.196.147.195:3306/acm?serverTimezone=GMT%2B8&useSSL=false&userUnicode=true&characterEncoding=utf-8
+#    url: jdbc:mysql://localhost:3306/acm?serverTimezone=GMT%2B8&useSSL=false&userUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
     host: smtp.sina.com
@@ -34,7 +34,6 @@ mybatis-plus:
 #  mapper-locations:
 server:
   port: 8081
-
 ---
 server:
   port: 8082

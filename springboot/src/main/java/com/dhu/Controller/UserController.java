@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.File;
@@ -41,8 +42,9 @@ public class UserController {
     @ResponseBody
     public Result<?> edit_password(
             @RequestParam("password") String password,
-            @ApiIgnore HttpSession session){
-        User user = (User)session.getAttribute("User");
+            @ApiIgnore HttpServletRequest request){
+        request.
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         user.setPassword(password);
         userService.updateById(user);
@@ -51,10 +53,10 @@ public class UserController {
     @ApiOperation("修改用户名")
     @PostMapping(value = "/editUser_username")
     @ResponseBody
-    public Result<?> editusername(
+    public Result<?> editUsername(
             @RequestParam("username") String username,
-            @ApiIgnore HttpSession session){
-        User user = (User) session.getAttribute("User");
+            @ApiIgnore HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         User selectUser = userService.selectUser(username);
         if(selectUser != null){
@@ -69,8 +71,8 @@ public class UserController {
     @ResponseBody
     public Result<?> edit_age(
             @RequestParam("age") Integer age,
-            @ApiIgnore HttpSession session){
-        User user = (User)session.getAttribute("User");
+            @ApiIgnore HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         user.setAge(age);
         userService.updateById(user);
@@ -103,8 +105,8 @@ public class UserController {
     @ResponseBody
     public Result<?> edit_nickname(
             @RequestParam("nick_name") String nick_name,
-            @ApiIgnore HttpSession session){
-        User user = (User)session.getAttribute("User");
+            @ApiIgnore HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         user.setNickName(nick_name);
         userService.updateById(user);
@@ -115,9 +117,9 @@ public class UserController {
     @ResponseBody
     public Result<?> edit_number(
             @RequestParam("number") String number,
-            @ApiIgnore HttpSession session
-    ){
-        User user = (User)session.getAttribute("User");
+            @ApiIgnore HttpServletRequest request
+            ){
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         user.setNumber(number);
         userService.updateById(user);
@@ -128,8 +130,8 @@ public class UserController {
     @ResponseBody
     public Result<?> edit_image(
             @RequestParam("image") MultipartFile image,
-            @ApiIgnore HttpSession session) throws IOException, SQLException {
-        User user = (User)session.getAttribute("User");
+            @ApiIgnore HttpServletRequest request) throws IOException, SQLException {
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         Blob blob = new SerialBlob(image.getBytes());
         user.setImage(blob);
@@ -140,12 +142,19 @@ public class UserController {
     @PostMapping(value = "/luogu")
     @ResponseBody
     public Result<?> luogu(@ApiParam("洛谷用户编号") @RequestParam("id") String id,
-                           @ApiIgnore HttpSession session){
-        User user = (User) session.getAttribute("User");
+                           @ApiIgnore HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null){
             return Result.error("用户未登录");
         }
         userService.modifyLuoguId(user.getId(), id);
+        return Result.success();
+    }
+    @ApiOperation("根据计算出的用户评分计算出排名, 在主页显示前十名")
+    @GetMapping(value = "/calRating")
+    @ResponseBody
+    public Result<?> calRating(){
+
         return Result.success();
     }
     @ApiOperation("获取所有用户")

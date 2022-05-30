@@ -5,11 +5,13 @@ import com.dhu.config.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
@@ -26,7 +28,7 @@ public class MailController {
     @ApiOperation("获取邮箱验证码")
     @GetMapping("/getCheckCode")
     @ResponseBody
-    public Result<?> getCheckCode(String email, @ApiIgnore HttpSession session){
+    public Result<?> getCheckCode(String email, @ApiIgnore HttpServletRequest request){
         String checkCode = String.valueOf(new Random().nextInt(899999) + 100000);
         String message = "您的邮箱验证码为: " + checkCode;
         try{
@@ -35,7 +37,7 @@ public class MailController {
             return Result.error(e.getMessage());
         }
 //        把验证码放到域对象中
-        session.setAttribute(email, checkCode);
+        request.getSession().setAttribute(email, checkCode);
         return Result.success(checkCode);
     }
 }

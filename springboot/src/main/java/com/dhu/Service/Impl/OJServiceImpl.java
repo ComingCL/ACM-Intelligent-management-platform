@@ -31,7 +31,7 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
         try{
 //            String exe = "C:\\Users\\13280\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe";
 //            String command = "C:\\Users\\13280\\Desktop\\ACM Intelligent management platform\\springboot\\src\\main\\java\\com\\dhu\\python\\luogu_user.py";
-            String exe = "python3";
+            String exe = "/usr/bin/python3";
             String command = "/root/luogu_user.py";
             String[] cmdArr =  new String[] {exe, command, id};
             proc = Runtime.getRuntime().exec(cmdArr);

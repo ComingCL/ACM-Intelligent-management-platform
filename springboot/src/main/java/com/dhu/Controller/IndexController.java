@@ -7,19 +7,12 @@ import org.springframework.web.bind.annotation.*;
  * Author: ComingLiu
  * Date: 2022/4/27 10:18
  */
-@RestController
+@Controller
+@RequestMapping("/Index")
 public class IndexController {
-    @GetMapping("/")
+    @GetMapping("/main")
     @ResponseBody
     public String index(){
         return "index";
-    }
-    @GetMapping("welcome")
-    public String welcome(){
-        return "welcome";
-    }
-    @GetMapping("main")
-    public String main(){
-        return "main";
     }
 }

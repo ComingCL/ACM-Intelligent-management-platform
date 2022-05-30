@@ -39,9 +39,11 @@ public class GradeController {
     @ApiOperation("插入一条数据")
     @PostMapping("/insert")
     @ResponseBody
-    public Result<?> Insert(@ApiParam("比赛名称") String name, @ApiParam("比赛成员") String member,
-                            @ApiParam("比赛时间") @DateTimeFormat(pattern = "yyyy-MM-dd") Date time,
-                            @ApiParam("奖项名称") String awards){
+    public Result<?> Insert(@ApiParam("比赛名称") @RequestParam("name") String name,
+                            @ApiParam("比赛成员") @RequestParam("member") String member,
+                            @ApiParam("比赛时间") @RequestParam("time")
+                                @DateTimeFormat(pattern = "yyyy-MM-dd") Date time,
+                            @ApiParam("奖项名称") @RequestParam("awards") String awards){
         return gradeService.insert(name, member, time, awards);
     }
     @ApiOperation("文件导入数据")

@@ -23,7 +23,7 @@ userID = argv[1]
 url = url + userID + practice
 chrome_options = webdriver.ChromeOptions()
 # linux下需要加这句话
-# chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 

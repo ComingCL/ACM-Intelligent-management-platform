@@ -14,5 +14,5 @@ public interface UserService extends IService<User> {
     Result<?> userInsert(String username, String password, String email);
     User selectUser(String username);
     User selectEmail(String email);
-    void modifyLuoguId(Long uid, String id);
+    void modifyLuoguId(String uid, String id);
 }

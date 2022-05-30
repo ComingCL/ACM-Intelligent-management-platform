@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * @Author: ComingLiu
@@ -23,7 +22,7 @@ import org.springframework.validation.annotation.Validated;
 public class User {
     @ApiModelProperty("用户id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
     @ApiModelProperty("用户名")
     private String username;
     @ApiModelProperty("用户年龄")
@@ -44,4 +43,8 @@ public class User {
     private Object image;
     @ApiModelProperty("洛谷id")
     private String luoguId;
+    @ApiModelProperty("是否集训队队员")
+    private Integer ismember;
+    @ApiModelProperty("评分")
+    private Integer rating;
 }

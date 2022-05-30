@@ -7,12 +7,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -29,8 +27,8 @@ public class OJController {
     @PostMapping("/blindingLuogu")
     @ResponseBody
     public Result<?> blindingLuogu(@ApiParam("输入洛谷用户编号, 必须是数字") @RequestParam("id") String id,
-                                   @ApiIgnore HttpSession session){
-        User user = (User) session.getAttribute("User");
+                                   @ApiIgnore HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
         if(user == null){
             return Result.error("用户未登录");
         }
