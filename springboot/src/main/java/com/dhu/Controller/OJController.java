@@ -1,8 +1,10 @@
 package com.dhu.Controller;
 
 import com.dhu.Service.OJService;
+import com.dhu.Service.UserService;
 import com.dhu.config.Result;
 import com.dhu.pojo.User;
+import com.dhu.utils.TwoTuple;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,10 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: ComingLiu
@@ -20,6 +26,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/OJ")
 public class OJController {
+    @Autowired
+    private UserService userService;
     @Autowired
     private OJService ojService;
 
@@ -32,6 +40,12 @@ public class OJController {
         if(user == null){
             return Result.error("用户未登录");
         }
-        return ojService.getLuoguInformation(id);
+        TwoTuple<HashMap<String, Integer>, Integer> twoTuple = ojService.getLuoguInformation(request, id);
+//        传递rating
+        user.setRating(twoTuple.second);
+        userService.updateById(user);
+//        传递题目情况
+        userService.modifyLuoguId(user.getId(), id);
+        return Result.success(twoTuple.first);
     }
 }

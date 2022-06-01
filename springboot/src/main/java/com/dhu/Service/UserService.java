@@ -6,6 +6,8 @@ import com.dhu.pojo.User;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Author: ComingLiu
  * Date: 2022/4/27 10:03
@@ -15,4 +17,5 @@ public interface UserService extends IService<User> {
     User selectUser(String username);
     User selectEmail(String email);
     void modifyLuoguId(String uid, String id);
+    List<User> getByRatingOrder();
 }

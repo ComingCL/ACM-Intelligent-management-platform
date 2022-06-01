@@ -1,5 +1,6 @@
 package com.dhu.Service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dhu.Service.UserService;
@@ -12,7 +13,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -48,7 +51,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void modifyLuoguId(String uid, String id) {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
         updateWrapper.eq("id", uid);
-        updateWrapper.set("luoguid", id);
+        updateWrapper.set("luogu_id", id);
         baseMapper.update(null, updateWrapper);
+    }
+    /**
+     *
+     * @return 根据rating给用户排序, 暂且如此设计, 实际上应按照用户的活动情况, 对于长时间未活动的用户不予排名
+     */
+    @Override
+    public List<User> getByRatingOrder() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("rating").isNotNull("rating").last("limit 10");
+        return list(wrapper);
     }
 }

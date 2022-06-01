@@ -46,7 +46,7 @@ if name is not None:
         except NoSuchElementException:
             print('未发现下一条数据')
             break
-problem.sort()
+# problem.sort()
 for i in problem:
     print(i)
 

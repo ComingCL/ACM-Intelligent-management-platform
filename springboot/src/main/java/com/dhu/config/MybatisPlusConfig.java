@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * Date: 2022/4/26 19:42
  */
 @Configuration
-//@MapperScan("com.dhu.mapper")
+@MapperScan("com.dhu.mapper")
 public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){

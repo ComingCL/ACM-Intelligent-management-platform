@@ -75,21 +75,21 @@ public class GradeController {
         }
         return gradeService.deleteByIds(ids);
     }
-    @ApiOperation("根据编号进行批量修改, 如果成功返回成功, 否则返回错误原因")
+    @ApiOperation("根据编号进行单个修改, 如果成功返回成功, 否则返回错误原因")
     @PostMapping("/modifyById")
     @ResponseBody
-    public Result<?> modifyById(@ApiParam("主键") String id,
-                                @ApiParam("修改后的比赛名称") String name,
-                                @ApiParam("修改后的成员") String members,
-                                @ApiParam("修改后的时间") @DateTimeFormat(pattern = "yyyy-MM-dd") Date time,
-                                @ApiParam("修改后的奖项") String awards){
+    public Result<?> modifyById(@ApiParam("主键") @RequestParam("id") String id,
+                                @ApiParam("修改后的比赛名称") @RequestParam("name") String name,
+                                @ApiParam("修改后的成员") @RequestParam("members") String members,
+                                @ApiParam("修改后的时间") @RequestParam("time") @DateTimeFormat(pattern = "yyyy-MM-dd") Date time,
+                                @ApiParam("修改后的奖项") @RequestParam("awards") String awards){
         return gradeService.modifyById(id, name, members, time, awards);
     }
-    @ApiOperation("获得全部比赛成绩, 分页显示, 每页二十条")
+    @ApiOperation("获得全部比赛成绩, 分页显示, 每页十条")
     @GetMapping("/getAllGrades")
     @ResponseBody
     public Result<?> get_All_Grades(int currentPage) {
-        int pageNumber = 20;
+        int pageNumber = 10;
         Page<Grade> page = new Page<>(currentPage, pageNumber);
         gradeMapper.selectPage(page, null);
         return Result.success(page.getRecords());

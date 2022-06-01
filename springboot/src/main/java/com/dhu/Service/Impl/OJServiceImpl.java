@@ -1,23 +1,21 @@
 package com.dhu.Service.Impl;
 
-import cn.hutool.aop.interceptor.SpringCglibInterceptor;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dhu.Service.OJService;
-import com.dhu.config.Result;
 import com.dhu.mapper.OJMapper;
-import com.dhu.pojo.Grade;
 import com.dhu.pojo.OJLuogu;
 import com.dhu.pojo.User;
+import com.dhu.utils.TwoTuple;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: ComingLiu
@@ -67,13 +65,13 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
 
 
     @Override
-    public Result<?> getLuoguInformation(String id) {
+    public TwoTuple<HashMap<String, Integer>, Integer> getLuoguInformation(HttpServletRequest request, String id) {
         List<String> list = getAllQuestions(id);
 //        之后处理
 
         HashMap<String, Integer> hashMap = new HashMap<>();
         List<OJLuogu> luoguList = baseMapper.selectBatchIds(list);
-        if(luoguList.isEmpty()) return Result.success("未查询到数据, 不排除可能是系统问题...");
+        int rating = 0;
         for(OJLuogu ojLuogu : luoguList){
             String[] data = ojLuogu.getAlgorithm().split(" ");
             for(String s : data){
@@ -83,7 +81,33 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
                     hashMap.put(s, 1);
                 }
             }
+//            先随便搞一个, 这个算法很不合理...
+            switch (ojLuogu.getDifficulty()) {
+                case "入门":
+                    rating += 1;
+                    break;
+                case "普及-":
+                    rating += 2;
+                    break;
+                case "普及/提高-":
+                    rating += 3;
+                    break;
+                case "普及+/提高":
+                    rating += 4;
+                    break;
+                case "提高+/省选-":
+                    rating += 6;
+                    break;
+                case "省选/NOI-":
+                    rating += 7;
+                    break;
+                case "NOI/NOI+/CTSC":
+                    rating += 10;
+                    break;
+                default:
+                    break;
+            }
         }
-        return Result.success(hashMap);
+        return new TwoTuple<>(hashMap, rating);
     }
 }

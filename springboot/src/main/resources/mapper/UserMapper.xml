@@ -9,4 +9,5 @@
     <select id="selectEmail" resultType="com.dhu.pojo.User">
         select * from user where email=#{email}
     </select>
+
 </mapper>

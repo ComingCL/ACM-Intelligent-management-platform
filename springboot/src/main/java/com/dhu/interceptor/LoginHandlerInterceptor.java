@@ -2,6 +2,7 @@ package com.dhu.interceptor;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.dhu.pojo.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @Component // ioc容器中的组件
 public class LoginHandlerInterceptor implements HandlerInterceptor {
+    /*
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("Authorization");
@@ -41,6 +43,17 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         return true;
     }
 
+     */
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        User user = (User) request.getSession().getAttribute("User");
+        if(user == null) {
+            noToken(response);
+            return false;
+        }
+        return true;
+    }
     private void noToken(HttpServletResponse response) throws IOException {
         response.setContentType("text/application;charset=utf-8");
         PrintWriter out = response.getWriter();

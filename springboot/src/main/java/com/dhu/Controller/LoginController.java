@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Author: ComingLiu
- * Date: 2022/4/18 14:49
+ * @Author: ComingLiu
+ * @Date: 2022/4/18 14:49
  */
 @CrossOrigin(originPatterns = "*", allowCredentials = "true")
 @Controller
@@ -41,11 +41,13 @@ public class LoginController {
             @ApiIgnore HttpServletResponse response){
         User user = userService.selectUser(username);
         if(user != null && user.getPassword().equals(password)){
-            String jwtString = TokenUtil.generateToken(user);
-            return Result.success(jwtString);
+//            String jwtString = TokenUtil.generateToken(user);
+//            return Result.success(jwtString);
+            request.getSession().setAttribute("User", user);
         }else{
             return Result.error("用户名或密码错误");
         }
+        return Result.success(user);
     }
 
     @ApiOperation("注册")

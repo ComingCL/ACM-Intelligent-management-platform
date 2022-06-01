@@ -40,7 +40,7 @@ public class PythonTest {
             }
             int res = proc.waitFor();
 //            0表示正常否则不正常
-//            System.out.println(res);
+            System.out.println(res);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -50,8 +50,8 @@ public class PythonTest {
         Process proc;
         try{
 //            proc = Runtime.getRuntime().exec("C:\\Users\\13280\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe \"C:\\Users\\13280\\Desktop\\ACM Intelligent management platform\\springboot\\src\\main\\java\\com\\dhu\\python\\test.py\"");
-            String exe = "python";
-            String command = "C:\\Users\\13280\\Desktop\\ACM Intelligent management platform\\springboot\\src\\main\\java\\com\\dhu\\python\\test.py";
+            String exe = "C:\\Users\\13280\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe";
+            String command = "C:\\Users\\13280\\Desktop\\ACM Intelligent management platform\\springboot\\src\\main\\java\\com\\dhu\\python\\luogu_user.py";
             String[] cmdArr =  new String[] {exe, command, "hello", "world"};
             proc = Runtime.getRuntime().exec(cmdArr);
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));

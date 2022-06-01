@@ -1,6 +1,7 @@
 package com.dhu.Controller;
 
 import com.dhu.Service.MailService;
+import com.dhu.Service.OJService;
 import com.dhu.Service.UserService;
 import com.dhu.config.Result;
 import com.dhu.mapper.UserMapper;
@@ -37,13 +38,14 @@ public class UserController {
     private UserService userService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private OJService ojService;
     @ApiOperation("修改密码")
     @PostMapping(value = "/editUser_password")
     @ResponseBody
     public Result<?> edit_password(
             @RequestParam("password") String password,
             @ApiIgnore HttpServletRequest request){
-        request.
         User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         user.setPassword(password);
@@ -117,8 +119,7 @@ public class UserController {
     @ResponseBody
     public Result<?> edit_number(
             @RequestParam("number") String number,
-            @ApiIgnore HttpServletRequest request
-            ){
+            @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
         if(user == null) return Result.error("用户为空");
         user.setNumber(number);
@@ -138,24 +139,11 @@ public class UserController {
         userService.updateById(user);
         return Result.success(user);
     }
-    @ApiOperation("洛谷账号绑定")
-    @PostMapping(value = "/luogu")
-    @ResponseBody
-    public Result<?> luogu(@ApiParam("洛谷用户编号") @RequestParam("id") String id,
-                           @ApiIgnore HttpServletRequest request){
-        User user = (User)request.getSession().getAttribute("User");
-        if(user == null){
-            return Result.error("用户未登录");
-        }
-        userService.modifyLuoguId(user.getId(), id);
-        return Result.success();
-    }
-    @ApiOperation("根据计算出的用户评分计算出排名, 在主页显示前十名")
+    @ApiOperation("根据计算出的用户评分计算出排名, 页面显示前十名")
     @GetMapping(value = "/calRating")
     @ResponseBody
     public Result<?> calRating(){
-
-        return Result.success();
+        return Result.success(userService.getByRatingOrder());
     }
     @ApiOperation("获取所有用户")
     @GetMapping(value = "/getUsers")

@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import javax.servlet.http.HttpServletRequest;
+
 @SpringBootTest
 public class AcmIntelligentManagementPlatformApplicationTests {
     @Autowired
@@ -29,10 +31,6 @@ public class AcmIntelligentManagementPlatformApplicationTests {
     private NewsService newsService;
     @Autowired
     private UserService userService;
-    @Test
-    public void testOJ(){
-        ojService.getLuoguInformation("2");
-    }
     @Test
     public void testUser(){
         for(User user : userService.list()){
