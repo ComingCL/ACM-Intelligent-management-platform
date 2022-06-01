@@ -39,7 +39,11 @@ public class LoginController {
             @RequestParam("password") String password,
             @ApiIgnore HttpServletRequest request,
             @ApiIgnore HttpServletResponse response){
-        User user = userService.selectUser(username);
+        User user = (User) request.getSession().getAttribute("User");
+        if(user != null){
+            return Result.error("index");
+        }
+        user = userService.selectUser(username);
         if(user != null && user.getPassword().equals(password)){
 //            String jwtString = TokenUtil.generateToken(user);
 //            return Result.success(jwtString);

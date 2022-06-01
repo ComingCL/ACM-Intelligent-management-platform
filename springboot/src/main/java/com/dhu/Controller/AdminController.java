@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -32,13 +34,15 @@ public class AdminController {
     @ResponseBody
     public Result<?> adminAdd(@ApiIgnore HttpServletRequest request,
                               @ApiParam("活动名称") @RequestParam("activity") String activity,
-                              @ApiParam("开始时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("startTime")@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date startTime,
-                              @ApiParam("结束时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("endTime")@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date endTime){
-        Date now = new Date(System.currentTimeMillis());
+                              @ApiParam("开始时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") String start,
+                              @ApiParam("结束时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") String end) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date startTime = format.parse(String.valueOf(start));
+        Date endTime = format.parse(String.valueOf(end));
         User admin = (User) request.getSession().getAttribute("User");
         boolean ok = tsignAdminService.adminAdd(new tSignAdmin(null, activity, startTime, endTime, admin.getUsername(), admin.getId()));
 
-        if(ok) return Result.error("添加失败, 请联系系统管理员");
+        if(!ok) return Result.error("添加失败, 请联系技术人员");
         return Result.success();
     }
     @ApiOperation("显示当前管理员发布的签到数量")
@@ -71,9 +75,12 @@ public class AdminController {
     public Result<?> modify(@ApiIgnore HttpServletRequest request,
                             @ApiParam("已发布签到的id") @RequestParam("id") String id,
                             @ApiParam("活动名称") @RequestParam("activity") String activity,
-                            @ApiParam("开始时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("startTime")@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date startTime,
-                            @ApiParam("结束时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("endTime")@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") Date endTime){
+                            @ApiParam("开始时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("startTime")@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") String start,
+                            @ApiParam("结束时间(yyyy-MM-dd hh:mm:ss)") @RequestParam("endTime")@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss") String end) throws ParseException {
         User admin = (User) request.getSession().getAttribute("User");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date startTime = format.parse(String.valueOf(start));
+        Date endTime = format.parse(String.valueOf(end));
         boolean ok = tsignAdminService.modify(admin.getId(), id, activity, startTime, endTime);
         if(ok) return Result.success();
         return Result.error("修改失败, 请联系系统管理员");

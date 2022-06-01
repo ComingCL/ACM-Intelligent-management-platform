@@ -66,7 +66,7 @@ public class tSignAdminServiceImpl extends ServiceImpl<tSignAdminMapper, tSignAd
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         QueryWrapper<tSignAdmin> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge("start_time", date).le("end_time", date);
+        queryWrapper.le("start_time", date).ge("end_time", date);
         return list(queryWrapper);
     }
 }
