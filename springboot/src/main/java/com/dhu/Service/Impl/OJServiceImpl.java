@@ -6,6 +6,7 @@ import com.dhu.Service.OJService;
 import com.dhu.mapper.OJMapper;
 import com.dhu.pojo.OJLuogu;
 import com.dhu.pojo.User;
+import com.dhu.utils.ThreeTuple;
 import com.dhu.utils.TwoTuple;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
             in.close();
             if(stringList.size() == 2 && stringList.get(1).equals("None")){
                 System.out.println("用户不存在");
+                return null;
             }else{
                 String luoguName = stringList.get(0);
                 list.add(luoguName);
@@ -54,7 +56,8 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
 //            0表示正常否则不正常
             if(res != 0) {
                 System.out.println("爬取洛谷数据时, 执行python程序出现错误");
-                return null;
+//                注意千万不要 return null 要不就坏事了...
+                return list;
             }
 //            System.out.println(res);
         } catch (Exception e) {
@@ -65,13 +68,14 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
 
 
     @Override
-    public TwoTuple<HashMap<String, Integer>, Integer> getLuoguInformation(HttpServletRequest request, String id) {
+    public ThreeTuple<HashMap<String, Integer>, Integer, Boolean> getLuoguInformation(HttpServletRequest request, String id) {
         List<String> list = getAllQuestions(id);
 //        之后处理
-
         HashMap<String, Integer> hashMap = new HashMap<>();
-        List<OJLuogu> luoguList = baseMapper.selectBatchIds(list);
         int rating = 0;
+        if(list == null) return new ThreeTuple<>(hashMap, rating, false);
+        if(list.isEmpty()) return new ThreeTuple<>(hashMap, rating, true);
+        List<OJLuogu> luoguList = baseMapper.selectBatchIds(list);
         for(OJLuogu ojLuogu : luoguList){
             String[] data = ojLuogu.getAlgorithm().split(" ");
             for(String s : data){
@@ -108,6 +112,6 @@ public class OJServiceImpl extends ServiceImpl<OJMapper, OJLuogu> implements OJS
                     break;
             }
         }
-        return new TwoTuple<>(hashMap, rating);
+        return new ThreeTuple<>(hashMap, rating, true);
     }
 }

@@ -4,6 +4,7 @@ import com.dhu.Service.OJService;
 import com.dhu.Service.UserService;
 import com.dhu.config.Result;
 import com.dhu.pojo.User;
+import com.dhu.utils.ThreeTuple;
 import com.dhu.utils.TwoTuple;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -40,12 +41,15 @@ public class OJController {
         if(user == null){
             return Result.error("用户未登录");
         }
-        TwoTuple<HashMap<String, Integer>, Integer> twoTuple = ojService.getLuoguInformation(request, id);
+        ThreeTuple<HashMap<String, Integer>, Integer, Boolean> threeTuple = ojService.getLuoguInformation(request, id);
 //        传递rating
-        user.setRating(twoTuple.second);
+        user.setRating(threeTuple.second);
         userService.updateById(user);
 //        传递题目情况
-        userService.modifyLuoguId(user.getId(), id);
-        return Result.success(twoTuple.first);
+        if(threeTuple.third){
+            userService.modifyLuoguId(user.getId(), id);
+            return Result.success(threeTuple.first);
+        }
+        return Result.error("操作失败, 该用户不存在");
     }
 }

@@ -42,7 +42,8 @@ public class SSOConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/swagger-ui.html/**")
                 .excludePathPatterns("/swagger/**")
                 .excludePathPatterns("/Mail/**")
-                .excludePathPatterns("/Index/**");
+                .excludePathPatterns("/Index/**")
+                .excludePathPatterns("/ws/**");
         registry.addInterceptor(adminHandlerInterceptor).addPathPatterns("/Admin/**");
     }
 }

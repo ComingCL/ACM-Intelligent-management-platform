@@ -2,6 +2,7 @@ package com.dhu.Service;
 
 import com.dhu.config.Result;
 import com.dhu.pojo.User;
+import com.dhu.utils.ThreeTuple;
 import com.dhu.utils.TwoTuple;
 import io.swagger.annotations.ApiParam;
 
@@ -15,5 +16,5 @@ import java.util.Map;
  * @Date: 2022/5/29 20:47
  */
 public interface OJService {
-    TwoTuple<HashMap<String, Integer>, Integer> getLuoguInformation(HttpServletRequest request, String id);
+    ThreeTuple<HashMap<String, Integer>, Integer, Boolean> getLuoguInformation(HttpServletRequest request, String id);
 }

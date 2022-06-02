@@ -120,6 +120,11 @@
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
+<!--解决Found multiple occurrences of org.json.JSONObject on the class path:的报错-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.vaadin.external.google</groupId>-->
+<!--                    <artifactId>android-json</artifactId>-->
+<!--                </exclusion>-->
             </exclusions>
         </dependency>
     </dependencies>

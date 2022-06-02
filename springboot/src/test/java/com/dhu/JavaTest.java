@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: ComingLiu
@@ -25,7 +26,8 @@ public class JavaTest {
     }
     @Test
     public void testEmpty(){
-        String s = null;
+        List<String> list = null;
+        if(list == null) System.out.println(1);
     }
     @Test
     public void testTime() throws ParseException {

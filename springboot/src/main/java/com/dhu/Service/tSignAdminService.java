@@ -53,4 +53,9 @@ public interface tSignAdminService extends IService<tSignAdmin> {
      * @return 查询当前用户活动签到信息
      */
     List<tSignAdmin> getSignId();
+
+    /**
+     * 管理员发送签到消息给所有队员
+     */
+    void sendMessage(String message);
 }

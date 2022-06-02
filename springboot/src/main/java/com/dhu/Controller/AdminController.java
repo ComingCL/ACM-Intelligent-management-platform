@@ -2,6 +2,7 @@ package com.dhu.Controller;
 
 import com.dhu.Service.tSignAdminService;
 import com.dhu.Service.tSignService;
+import com.dhu.component.WebSocketServer;
 import com.dhu.config.Result;
 import com.dhu.pojo.User;
 import com.dhu.pojo.tSignAdmin;
@@ -43,6 +44,7 @@ public class AdminController {
         boolean ok = tsignAdminService.adminAdd(new tSignAdmin(null, activity, startTime, endTime, admin.getUsername(), admin.getId()));
 
         if(!ok) return Result.error("添加失败, 请联系技术人员");
+        tsignAdminService.sendMessage("有新的签到");
         return Result.success();
     }
     @ApiOperation("显示当前管理员发布的签到数量")

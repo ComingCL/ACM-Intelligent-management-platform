@@ -2,24 +2,18 @@ package com.dhu;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dhu.Service.MailService;
+import com.dhu.component.WebSocketServer;
 import com.dhu.Service.NewsService;
 import com.dhu.Service.OJService;
 import com.dhu.Service.UserService;
-import com.dhu.mapper.NewsMapper;
-import com.dhu.mapper.UserMapper;
-import com.dhu.pojo.News;
 import com.dhu.pojo.User;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @SpringBootTest
 public class AcmIntelligentManagementPlatformApplicationTests {

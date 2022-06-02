@@ -3,6 +3,7 @@ package com.dhu.Service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dhu.component.WebSocketServer;
 import com.dhu.pojo.tSign;
 import com.dhu.pojo.tSignAdmin;
 import com.dhu.mapper.tSignAdminMapper;
@@ -23,6 +24,8 @@ import java.util.List;
 public class tSignAdminServiceImpl extends ServiceImpl<tSignAdminMapper, tSignAdmin> implements tSignAdminService{
     @Autowired
     private tSignAdminMapper tsignAdminMapper;
+    @Autowired
+    private WebSocketServer server;
 
     @Override
     public boolean adminAdd(tSignAdmin ts) {
@@ -33,7 +36,7 @@ public class tSignAdminServiceImpl extends ServiceImpl<tSignAdminMapper, tSignAd
     @Override
     public Long getNumber(String uid) {
         QueryWrapper<tSignAdmin> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", uid);
+        queryWrapper.eq("initiator_id", uid);
         return count(queryWrapper);
     }
 
@@ -50,6 +53,7 @@ public class tSignAdminServiceImpl extends ServiceImpl<tSignAdminMapper, tSignAd
     public Integer deleteSign(String uid, String id) {
         QueryWrapper<tSignAdmin> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("initiator_id", uid);
+        queryWrapper.eq("id", id);
         return tsignAdminMapper.delete(queryWrapper);
     }
 
@@ -68,5 +72,10 @@ public class tSignAdminServiceImpl extends ServiceImpl<tSignAdminMapper, tSignAd
         QueryWrapper<tSignAdmin> queryWrapper = new QueryWrapper<>();
         queryWrapper.le("start_time", date).ge("end_time", date);
         return list(queryWrapper);
+    }
+
+    @Override
+    public void sendMessage(String message) {
+        server.sendMessageToTeams(message);
     }
 }
