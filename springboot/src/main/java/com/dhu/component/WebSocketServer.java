@@ -49,15 +49,15 @@ public class WebSocketServer {
     public void onOpen(Session session, @PathParam("uid") String uid){
         sessionMap.put(uid, session);
         log.info("有新用户加入, userid={}, 当前在线人数为: {}", uid, sessionMap.size());
-        JSONObject result = new JSONObject();
-        JSONArray array = new JSONArray();
-        result.set("users", array);
-        for(Object key : sessionMap.keySet()){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.set("uid", key);
-            array.add(jsonObject);
-        }
-        sendAllMessage(JSONUtil.toJsonStr(result));
+//        JSONObject result = new JSONObject();
+//        JSONArray array = new JSONArray();
+//        result.set("users", array);
+//        for(Object key : sessionMap.keySet()){
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.set("uid", key);
+//            array.add(jsonObject);
+//        }
+//        sendAllMessage(JSONUtil.toJsonStr(result));
     }
     /**
      * 连接关闭调用的方法
@@ -114,12 +114,15 @@ public class WebSocketServer {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("ismember", 1);
         List<User> list = userMapper.selectList(queryWrapper);
-        for(User user : list) hashSet.add(user.getId());
+        for(User user : list) {
+            hashSet.add(user.getId());
+            System.out.println(user.getId());
+        }
         try{
-            for(Session session : sessionMap.values()){
-                if(hashSet.contains(session.getId())){
-                    log.info("服务端给客户端[{}]发送消息", session.getId());
-                    session.getBasicRemote().sendText(message);
+            for(String uid : sessionMap.keySet()){
+                if(hashSet.contains(uid)){
+                    log.info("服务端给用户[{}]发送消息", uid);
+                    sessionMap.get(uid).getBasicRemote().sendText(message);
                 }
             }
         } catch (IOException e) {

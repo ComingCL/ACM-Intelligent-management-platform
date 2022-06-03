@@ -1,11 +1,15 @@
 package com.dhu.Controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.dhu.Service.UserService;
 import com.dhu.Service.tSignAdminService;
 import com.dhu.Service.tSignService;
 import com.dhu.component.WebSocketServer;
 import com.dhu.config.Result;
+import com.dhu.mapper.UserMapper;
 import com.dhu.pojo.User;
 import com.dhu.pojo.tSignAdmin;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +31,28 @@ import java.util.Date;
 @RequestMapping("/Admin")
 public class AdminController {
     @Autowired
+    private UserService userService;
+    @Autowired
     private tSignAdminService tsignAdminService;
 
+    @ApiOperation("管理员设置用户为队员身份, 返回值修改成功数量")
+    @PostMapping("/addMember")
+    @ResponseBody
+    public Result<?> addMember(@RequestParam("id") String id){
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id).set("ismember", 1);
+        userService.update(updateWrapper);
+        return Result.success();
+    }
+    @ApiOperation("管理员取消用户队员身份, 返回值表示修改成功数量")
+    @PostMapping("/deleteMember")
+    @ResponseBody
+    public Result<?> deleteMember(@RequestParam("id") String id){
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id).set("ismember", 0);
+        userService.update(updateWrapper);
+        return Result.success();
+    }
     @ApiOperation("管理员添加签到信息, 系统自动获取发起人名称, 集训队员收到需要签到的要求," +
             " 此处需设置起始时间不晚于当前系统时间")
     @PostMapping("/adminAdd")

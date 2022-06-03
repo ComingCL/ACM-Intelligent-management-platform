@@ -2,10 +2,12 @@ package com.dhu;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dhu.component.WebSocketServer;
 import com.dhu.Service.NewsService;
 import com.dhu.Service.OJService;
 import com.dhu.Service.UserService;
+import com.dhu.mapper.UserMapper;
 import com.dhu.pojo.User;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.List;
-
-@SpringBootTest
+//提供真实的web环境, 提供websocket支持等
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AcmIntelligentManagementPlatformApplicationTests {
     @Autowired
     JavaMailSenderImpl mailSender;
@@ -25,6 +27,10 @@ public class AcmIntelligentManagementPlatformApplicationTests {
     private NewsService newsService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private WebSocketServer server;
     @Test
     public void testUser(){
         for(User user : userService.list()){
@@ -38,5 +44,18 @@ public class AcmIntelligentManagementPlatformApplicationTests {
         String userid = decodedJWT.getClaim("userid").asString();
         String username = decodedJWT.getClaim("username").asString();
         System.out.println(userid + " " + username);
+    }
+    @Test
+    public void testSQL(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("ismember", 1);
+        List<User> users = userMapper.selectList(queryWrapper);
+        for(User user : users){
+            System.out.println(user.getUsername());
+        }
+    }
+    @Test
+    public void testWebSocket(){
+        server.sendMessageToTeams("1235");
     }
 }
