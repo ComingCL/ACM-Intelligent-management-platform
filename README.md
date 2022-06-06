@@ -7,7 +7,7 @@
 
 ## 项目技术
 
-* 前端： vue/bootstrap
+* 前端： Vue+elementUI+echarts
 * 后端: springboot + mybatis plus
 * 数据库: 暂定mysql
 * 服务器: 先使用tomcat, 后期需要购买服务器进行上线
