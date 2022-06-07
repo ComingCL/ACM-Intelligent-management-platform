@@ -8,13 +8,18 @@ import com.dhu.Service.NewsService;
 import com.dhu.Service.OJService;
 import com.dhu.Service.UserService;
 import com.dhu.mapper.UserMapper;
+import com.dhu.mapper.tSignAdminMapper;
 import com.dhu.pojo.User;
+import com.dhu.pojo.tSignAdmin;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 //提供真实的web环境, 提供websocket支持等
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,6 +36,8 @@ public class AcmIntelligentManagementPlatformApplicationTests {
     private UserMapper userMapper;
     @Autowired
     private WebSocketServer server;
+    @Autowired
+    private tSignAdminMapper mapper;
     @Test
     public void testUser(){
         for(User user : userService.list()){
@@ -57,5 +64,14 @@ public class AcmIntelligentManagementPlatformApplicationTests {
     @Test
     public void testWebSocket(){
         server.sendMessageToTeams("1235");
+    }
+    @Test
+    public void testTSignAdminMapper() throws ParseException {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<tSignAdmin> list = mapper.getSignId(simpleDateFormat.parse("1234-12-12 11:11:11"));
+        for(tSignAdmin admin : list){
+            System.out.println(admin.getActivity());
+        }
     }
 }

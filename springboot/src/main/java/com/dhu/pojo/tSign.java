@@ -3,6 +3,7 @@ package com.dhu.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,13 @@ public class tSign {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     @ApiModelProperty("签到id, 唯一")
     private String id;
-    @ApiModelProperty("签到原因")
+    @ApiModelProperty("签到原因, 使用JsonFormat格式化时间")
     private String activity;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss", iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(
+            pattern = "yyyy-MM-dd hh:mm:ss",
+            timezone = "GMT+8"
+    )
     @ApiModelProperty("签到时间")
     private Date time;
     @ApiModelProperty("签到人员名字")

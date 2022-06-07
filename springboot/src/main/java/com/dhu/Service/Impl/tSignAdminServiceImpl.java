@@ -71,7 +71,7 @@ public class tSignAdminServiceImpl extends ServiceImpl<tSignAdminMapper, tSignAd
         Date date = new Date(System.currentTimeMillis());
         QueryWrapper<tSignAdmin> queryWrapper = new QueryWrapper<>();
         queryWrapper.le("start_time", date).ge("end_time", date);
-        return list(queryWrapper);
+        return tsignAdminMapper.getSignId(date);
     }
 
     @Override

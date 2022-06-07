@@ -32,15 +32,21 @@ public class OJController {
     @Autowired
     private OJService ojService;
 
+    @ApiOperation("如果已经绑定了账户, 那么就根据账户爬取信息")
+    @RequestMapping("/getInfos")
+    @ResponseBody
+    public Result<?> getInfos(@ApiIgnore HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("User");
+        if(user.getLuoguId() == null) return Result.error("未绑定");
+        ThreeTuple<HashMap<String, Integer>, Integer, Boolean> threeTuple = ojService.getLuoguInformation(request, user.getLuoguId());
+        return Result.success(threeTuple.first);
+    }
     @ApiOperation("绑定洛谷账户, 这里如果已经绑定了, 可以重新绑定, 没有关系")
     @PostMapping("/blindingLuogu")
     @ResponseBody
     public Result<?> blindingLuogu(@ApiParam("输入洛谷用户编号, 必须是数字") @RequestParam("id") String id,
                                    @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null){
-            return Result.error("用户未登录");
-        }
         ThreeTuple<HashMap<String, Integer>, Integer, Boolean> threeTuple = ojService.getLuoguInformation(request, id);
 //        传递rating
         user.setRating(threeTuple.second);

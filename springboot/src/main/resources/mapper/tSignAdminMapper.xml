@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.mapper.tSignAdminMapper">
+<!--    List<tSignAdmin> getSignId(Date date);-->
+    <resultMap id="tSignAdminResultMap" type="com.dhu.pojo.tSignAdmin">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="activity" jdbcType="VARCHAR" property="activity"/>
+        <result column="time" jdbcType="DATE" property="time"/>
+        <result column="person" jdbcType="VARCHAR" property="person"/>
+        <result column="sid" jdbcType="VARCHAR" property="sid"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+    </resultMap>
+<!--    List<tSignAdmin> getSignId(Date date);-->
+<!--    not exists 的多表查询-->
+    <select id="getSignId" resultMap="tSignAdminResultMap">
+        select * from t_sign_admin where #{date} between start_time and end_time
+                               and not exists(select * from t_sign where t_sign_admin.id = t_sign.sid)
+    </select>
+</mapper>

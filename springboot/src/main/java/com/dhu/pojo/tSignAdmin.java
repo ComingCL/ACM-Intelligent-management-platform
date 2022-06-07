@@ -3,6 +3,7 @@ package com.dhu.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,17 @@ public class tSignAdmin {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     private String activity;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss", iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(
+            pattern = "yyyy-MM-dd hh:mm:ss",
+            timezone = "GMT+8"
+    )
     private Date startTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss", iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(
+            pattern = "yyyy-MM-dd hh:mm:ss",
+            timezone = "GMT+8"
+    )
     private Date endTime;
     private String initiator;
     private String initiatorId;

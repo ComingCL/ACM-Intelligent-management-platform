@@ -45,8 +45,10 @@ if name is not None:
             problem.append(one)
         except NoSuchElementException:
             print('未发现下一条数据')
+            driver.quit()
             break
 # problem.sort()
+driver.quit()
 for i in problem:
     print(i)
 

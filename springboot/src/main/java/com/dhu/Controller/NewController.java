@@ -47,11 +47,11 @@ public class NewController {
         newsService.release(time, name, content, sender);
         return Result.success(new News(null, time, name, content, sender));
     }
-    @ApiOperation("新闻分页显示, 每页二十条")
+    @ApiOperation("新闻分页显示, 每页十条")
     @GetMapping(value = "/getAll-news")
     @ResponseBody
     public Result<?> getAll_news(Integer currentPage){
-        int pageNumber = 20;// 每页显示20条数据
+        int pageNumber = 10;// 每页显示20条数据
         Page<News> page = new Page<>(currentPage, pageNumber);
         newsMapper.selectPage(page, null);
         return Result.success(page.getRecords());

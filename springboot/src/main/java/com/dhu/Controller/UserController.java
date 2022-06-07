@@ -47,9 +47,9 @@ public class UserController {
             @RequestParam("password") String password,
             @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null) return Result.error("用户为空");
         user.setPassword(password);
         userService.updateById(user);
+        request.setAttribute("User", user);
         return Result.success(user);
     }
     @ApiOperation("修改用户名")
@@ -59,13 +59,13 @@ public class UserController {
             @RequestParam("username") String username,
             @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null) return Result.error("用户为空");
         User selectUser = userService.selectUser(username);
         if(selectUser != null){
             return Result.error("用户名已存在");
         }
         user.setUsername(username);
         userService.updateById(user);
+        request.setAttribute("User", user);
         return Result.success(user);
     }
     @ApiOperation("修改年龄")
@@ -75,9 +75,9 @@ public class UserController {
             @RequestParam("age") Integer age,
             @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null) return Result.error("用户为空");
         user.setAge(age);
         userService.updateById(user);
+        request.setAttribute("User", user);
         return Result.success(user);
     }
     @ApiOperation("修改绑定邮箱, 开发中...")
@@ -109,9 +109,9 @@ public class UserController {
             @RequestParam("nick_name") String nick_name,
             @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null) return Result.error("用户为空");
         user.setNickName(nick_name);
         userService.updateById(user);
+        request.setAttribute("User", user);
         return Result.success(user);
     }
     @ApiOperation("修改学号")
@@ -121,9 +121,9 @@ public class UserController {
             @RequestParam("number") String number,
             @ApiIgnore HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null) return Result.error("用户为空");
         user.setNumber(number);
         userService.updateById(user);
+        request.setAttribute("User", user);
         return Result.success(user);
     }
     @ApiOperation("修改用户头像")
@@ -133,9 +133,9 @@ public class UserController {
             @RequestParam("image") MultipartFile image,
             @ApiIgnore HttpServletRequest request) throws IOException, SQLException {
         User user = (User)request.getSession().getAttribute("User");
-        if(user == null) return Result.error("用户为空");
         Blob blob = new SerialBlob(image.getBytes());
         user.setImage(blob);
+        request.setAttribute("User", user);
         userService.updateById(user);
         return Result.success(user);
     }
